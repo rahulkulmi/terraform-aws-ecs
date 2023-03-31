@@ -1,0 +1,26 @@
+[
+  {
+    "name": "${app_name}",
+    "image": "${image}",
+    "essential": true,
+    "cpu": ${fargate_cpu},
+    "memory": ${fargate_memory},
+    "networkMode": "awsvpc",
+    "logConfiguration": {
+        "logDriver": "awslogs",
+        "options": {
+          "awslogs-group": "${logGroup}",
+          "awslogs-region": "${region}",
+          "awslogs-stream-prefix": "ecs"
+        }
+    },
+    "portMappings": [
+      {
+        "containerPort": ${app_port},
+        "hostPort": ${app_port}
+      }
+    ],
+    "environment": [${env_config}],
+    "secrets": [${secret_config}]
+  }
+]

@@ -1,0 +1,59 @@
+[
+  {
+    "name": "${app_name}",
+    "image": "${image}",
+    "essential": true,
+    "logConfiguration": {
+    %{ if use_datadog_logging }
+      "logDriver": "awsfirelens",
+       "options": {
+         "Name": "datadog",
+         "apikey": "${ datadog_api_key }",
+         "Host": "http-intake.logs.datadoghq.com",
+         "dd_service": "${app_name}",
+         "dd_source": "nodejs",
+         "dd_message_key": "log",
+         "dd_tags": "project:fluentbit",
+         "TLS": "on",
+         "provider": "ecs"
+       }
+    %{ else }
+      "logDriver": "awslogs",
+      "options": {
+        "awslogs-group": "${logGroup}",
+        "awslogs-region": "${region}",
+        "awslogs-stream-prefix": "ecs"
+      }
+    %{ endif }
+    },
+    "portMappings": [
+      {
+        "containerPort": ${app_port},
+        "hostPort": ${app_port}
+      }
+    ],
+    "environment": [${env_config}],
+    "secrets": [${secret_config}]
+  }%{ if use_datadog },
+  {
+    "name": "datadog-agent",
+    "image": "datadog/agent:latest",
+    "essential": true,
+    "environment": [${datadog_env_config}],
+    "secrets": [${datadog_secret_config}]
+  }%{ endif }%{ if use_datadog_logging },
+  {
+     "essential": true,
+     "image": "amazon/aws-for-fluent-bit:latest",
+     "name": "log_router",
+     "firelensConfiguration": {
+       "type": "fluentbit",
+       "options": {
+         "enable-ecs-log-metadata": "true",
+         "config-file-type": "file",
+         "config-file-value": "/fluent-bit/configs/parse-json.conf"
+       }
+     }
+  }
+  %{ endif }
+]
