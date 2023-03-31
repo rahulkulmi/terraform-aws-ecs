@@ -4,13 +4,13 @@ variable "region" {
   description = "The region to deploy resources"
 }
 
-variable "access_key" {
-  description = "My AWS access key"
-}
+# variable "access_key" {
+#   description = "My AWS access key"
+# }
 
-variable "secret_key" {
-  description = "My AWS secret key"
-}
+# variable "secret_key" {
+#   description = "My AWS secret key"
+# }
 
 variable "stage" {
   default = "dev"
@@ -94,10 +94,10 @@ variable "private_subnet_ids" {
 #   default = false
 # }
 
-# variable "zone_id" {
-#   type        = string
-#   description = "The ID of the hosted zone to contain this record."
-# }
+variable "zone_id" {
+  type        = string
+  description = "The ID of the hosted zone to contain this record."
+}
 
 variable "record_name" {
   type        = string
@@ -250,17 +250,17 @@ variable "loadbalancer_internal" {
   description = "Whether the load balancer is internal or not."
 }
 
-variable "loadbalancer_ingress_rules" {
-  type        = list(object({ protocol = string, from_port = number, to_port = number, cidr_blocks = list(string) }))
-  description = "List of ingress rules for load balancer"
-  default     = []
-}
+# variable "loadbalancer_ingress_rules" {
+#   type        = list(object({ protocol = string, from_port = number, to_port = number, cidr_blocks = list(string) }))
+#   description = "List of ingress rules for load balancer"
+#   default     = []
+# }
 
-variable "loadbalancer_egress_rules" {
-  type        = list(object({ protocol = string, from_port = number, to_port = number, cidr_blocks = list(string) }))
-  description = "List of egress rules for load balancer"
-  default     = []
-}
+# variable "loadbalancer_egress_rules" {
+#   type        = list(object({ protocol = string, from_port = number, to_port = number, cidr_blocks = list(string) }))
+#   description = "List of egress rules for load balancer"
+#   default     = []
+# }
 
 variable "loadbalancer_additional_security_groups" {
   type        = list(string)
