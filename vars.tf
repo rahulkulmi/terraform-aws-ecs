@@ -51,11 +51,11 @@ variable "cluster_name" {
   description = "The cluster to add the ECS service to"
 }
 
-variable "service_name" {
-  type        = string
-  description = "The cluster to add the ECS service to"
-  default     = aws_ecs_service.main.name
-}
+# variable "service_name" {
+#   type        = string
+#   description = "The cluster to add the ECS service to"
+#   default     = aws_ecs_service.main.name
+# }
 
 variable "fargate_cpu" {
   description = "Fargate instance CPU units to provision (1 vCPU = 1024 CPU units)"

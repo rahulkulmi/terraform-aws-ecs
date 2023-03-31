@@ -1,6 +1,6 @@
 resource "aws_appautoscaling_target" "target" {
   service_namespace  = "ecs"
-  resource_id        = "service/${var.cluster_name}/${var.service_name}"
+  resource_id        = "service/${var.cluster_name}/${aws_ecs_service.main.name}"
   scalable_dimension = "ecs:service:DesiredCount"
   min_capacity       = var.min_capacity
   max_capacity       = var.max_capacity
@@ -10,7 +10,7 @@ resource "aws_appautoscaling_target" "target" {
 resource "aws_appautoscaling_policy" "up" {
   name               = "${var.app_name}_${var.stage}_scale_up"
   service_namespace  = "ecs"
-  resource_id        = "service/${var.cluster_name}/${var.service_name}"
+  resource_id        = "service/${var.cluster_name}/${aws_ecs_service.main.name}"
   scalable_dimension = "ecs:service:DesiredCount"
 
   step_scaling_policy_configuration {
@@ -32,7 +32,7 @@ resource "aws_appautoscaling_policy" "up" {
 resource "aws_appautoscaling_policy" "mem_up" {
   name               = "${var.app_name}_${var.stage}_scale_mem_up"
   service_namespace  = "ecs"
-  resource_id        = "service/${var.cluster_name}/${var.service_name}"
+  resource_id        = "service/${var.cluster_name}/${aws_ecs_service.main.name}"
   scalable_dimension = "ecs:service:DesiredCount"
 
   step_scaling_policy_configuration {
@@ -54,7 +54,7 @@ resource "aws_appautoscaling_policy" "mem_up" {
 resource "aws_appautoscaling_policy" "down" {
   name               = "${var.app_name}_${var.stage}_scale_down"
   service_namespace  = "ecs"
-  resource_id        = "service/${var.cluster_name}/${var.service_name}"
+  resource_id        = "service/${var.cluster_name}/${aws_ecs_service.main.name}"
   scalable_dimension = "ecs:service:DesiredCount"
 
   step_scaling_policy_configuration {
@@ -76,7 +76,7 @@ resource "aws_appautoscaling_policy" "down" {
 resource "aws_appautoscaling_policy" "mem_down" {
   name               = "${var.app_name}_${var.stage}_scale_mem_down"
   service_namespace  = "ecs"
-  resource_id        = "service/${var.cluster_name}/${var.service_name}"
+  resource_id        = "service/${var.cluster_name}/${aws_ecs_service.main.name}"
   scalable_dimension = "ecs:service:DesiredCount"
 
   step_scaling_policy_configuration {
