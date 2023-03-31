@@ -54,7 +54,7 @@ variable "cluster_name" {
 variable "service_name" {
   type        = string
   description = "The cluster to add the ECS service to"
-  default     = aws_ecs_service.this.name
+  default     = aws_ecs_service.main.name
 }
 
 variable "fargate_cpu" {
